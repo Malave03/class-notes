@@ -1,0 +1,15 @@
+# cLASS NOTES ON LIST
+
+my_list = ['a','b','duck','c','d','e']
+
+print(my_list.pop(0))  #pop() is a lsit method (This is on python 3.10)
+print(my_list)
+my_list.remove('duck')
+print(my_list)
+
+my_list.insert(0,'new duck')
+print(my_list)
+
+
+my_list = [1,"a",['pizza','party',['banana','pink lady','green apple', ],'wednesday'], ]
+print(my_list[2][2][1])
