@@ -1,0 +1,218 @@
+# Bugs in refactored checking for winners.
+# Find the bugs, consider how you would correct it
+
+def print_board():
+    print(f" {board[0][0]} | {board[0][1]} | {board[0][2]}  ")
+    print("---+---+---")
+    print(f" {board[1][0]} | {board[1][1]} | {board[1][2]}  ")
+    print("---+---+---")
+    print(f" {board[2][0]} | {board[2][1]} | {board[2][2]}  ")
+
+#board[row][column]
+board = [[1,2,3],
+              [4,5,6],
+              [7,8,9]]
+
+# Bugs in refactored checking for winners.
+# Find the bugs, consider how you would correct it
+
+#board[row][column]
+
+import turtle as t
+
+board = [[1,2,3]],
+[4,5,6],
+[7,8,9]
+
+print("Welcome to tic-tac-toe")
+
+t.speed(500)
+def teleport(x,y):
+    t.penup()
+    t.goto(x,y)
+    t.pendown()
+
+def draw_board():
+    teleport(-250,100)
+    t.forward(500)
+    teleport(-250,-100)
+    t.forward(500)
+    teleport(-100,250)
+    t.right(90)
+    t.forward(500)
+    teleport(100,250)
+    t.forward(500)
+    
+def center_coords_for_drawing(x_coord, y_coord, x_or_o):
+    
+# To be able to consistently draw our x and y coordinates we have to set them
+#to the center of each cell.
+# I've done x <-100 and y<-100 you should do the rest.
+# Are there any that are missing?
+
+# center the x
+    if x_coord < -100:
+        x_coord = -175
+        column_idx = 0
+
+    elif x_coord > 100:
+        x_coord = 175
+        column_idx = 2
+        
+
+    else:
+        x = 0
+        column_idx = 1
+        
+
+        
+    # center the y
+    if y_coord < -100:
+        y_coord = -175
+        row_idx = 2
+
+    elif y_coord > 100:
+        y_coord = 175
+        row_idx = 0
+        
+    else:
+        y_coord = 0
+        row_idx = 1
+        
+    board[row_idx][column_idx] = x_or_o
+        
+    return x_coord, y_coord
+    
+def draw_x(x_coord,y_coord):
+# put your draw x function here
+    x_or_o = 'x'
+    x_coord, y_coord = center_coords_for_drawing(x_coord, y_coord, x_or_o)
+    teleport(x_coord,y_coord)
+    t.setheading(45)
+    t.forward(50)
+    t.backward(100)
+    teleport(x_coord,y_coord)
+    t.setheading(135)
+    t.forward(50)
+    t.backward(100)
+    t.update()
+    t.onscreenclick(draw_o)
+    
+
+    
+def draw_o(x_coord,y_coord):
+# add your draw o function here. I recommend using dot(). See notes in readme
+    x_or_o = 'x'
+    x_coord, y_coord = center_coords_for_drawing(x_coord, y_coord, x_or_o)
+    teleport(x_coord,y_coord)
+    t.dot(100, "black")
+    t.dot(98, "white")
+    t.update()
+    t.onscreenclick(draw_x)
+
+# odd turns x even turns o
+def check_for_winners():
+    # These three lines of code are new, but you have read about them
+    winner = False
+#     turn = 0
+#     while not winner:  # changed to while loop instead of for loop
+        
+#         if turn % 2 == 0:
+#             x_or_o = "x"
+#         else:
+#             x_or_o = "o"
+#         turn += 1
+#         location = int(input(f"Where to put {x_or_o}? "))
+
+    for row_idx in range(3):
+        for col_idx in range(3):
+            if board[row_idx][col_idx] == x_or_o:
+                board[row_idx][col_idx] = x_or_o
+
+    for idx in range(3):
+        # check rows for winners
+        if board[idx][0]==board[idx][1]==board[idx][2]:
+            winner = True
+        #check columns for winners
+        if board[0][idx]==board[1][idx]==board[2][idx]:
+            winner = True
+    # check diags
+    if board[0][0]==board[1][1]==board[2][2]:
+        winner = True
+    if board[2][0]==board[1][1]==board[0][2]:
+        winner = True
+
+    print_board()
+    if winner == True:
+        print(f"The winner is: {x_or_o}")
+        winner = open('winner.txt','a')
+        winner.write(f'player\t won\n {x_or_o} wins')
+
+        winner.close()
+        print("Game Over")
+        return x_or_o
+    
+    
+t.onscreenclick(draw_x)
+t.tracer(0)
+t.ht()
+draw_board()
+t.listen()
+while True:
+    t.listen()
+    check_for_winners()
+    t.update()
+
+
+t.done
+
+the_winner = check_for_winners()
+    
+    
+        #Todo change these 3s to b##########################
+# Drawing code from homework 5
+##########################
+
+### Make your draw_board() function here.
+
+
+
+
+
+    
+
+
+  
+
+    
+
+
+# Todo 4 Remember that we need to update our board_list to check for winners,
+# how can we do that with the centered x_coord, y_coord? Hint: the board is a list
+# and lists are defined globally and the index should be [0,1,2] We'll do this
+#together
+# before merging our code
+
+# e the length of a row or column
+        # Checking user input to place x or o token on board.
+    
+    
+        
+
+    
+
+
+# read the txt file, display winners
+# play game
+# get the winner x, o
+# write the winner to a txt file
+#
+
+# TODO Implement a play again feature
+
+if __name__ == "__main__":
+    check_for_winners()
+    draw_board()
+    
+
+
