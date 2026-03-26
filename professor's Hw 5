@@ -1,0 +1,125 @@
+##########################
+# Drawing code from homework 5
+##########################
+import turtle as t
+### Make your draw_board() function here.
+
+t.speed(500)
+def teleport(x,y):
+    t.penup()
+    t.goto(x,y)
+    t.pendown()
+
+def draw_board():
+    teleport(-250,100)
+    t.forward(500)
+    teleport(-250,-100)
+    t.forward(500)
+    teleport(-100,250)
+    t.right(90)
+    t.forward(500)
+    teleport(100,250)
+    t.forward(500)
+
+def draw_board_w_coords():
+# This function is to help with centering your X and o
+# It prints the x,y coordinates on the screen
+    teleport(-250,100)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    t.forward(500)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    teleport(-250,-100)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    t.forward(500)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    teleport(-100,250)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    t.right(90)
+    t.forward(500)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    teleport(100,250)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    t.forward(500)
+    t.write(t.pos(),font = ("Arial", 15, ""))
+    
+def center_coords_for_drawing(x_coord, y_coord):
+    
+# To be able to consistently draw our x and y coordinates we have to set them
+#to the center of each cell.
+# I've done x <-100 and y<-100 you should do the rest.
+# Are there any that are missing?
+
+# center the x
+    if x_coord < -100:
+        x_coord = -175
+
+    elif x_coord > 100:
+        x_coord = 175
+
+    else:
+        x = 0
+        
+
+        
+    # center the y
+    if y_coord < -100:
+        y_coord = -175
+
+    elif y_coord > 100:
+        y_coord = 175
+        
+    else:
+        y_coord = 0
+        
+    return x_coord, y_coord
+    
+
+
+  
+def draw_x(x_coord,y_coord):
+# put your draw x function here
+    x_coord, y_coord = center_coords_for_drawing(x_coord, y_coord)
+    teleport(x_coord,y_coord)
+    t.setheading(45)
+    t.forward(50)
+    t.backward(100)
+    teleport(x_coord,y_coord)
+    t.setheading(135)
+    t.forward(50)
+    t.backward(100)
+    t.update()
+    t.onscreenclick(draw_o)
+    
+
+    
+def draw_o(x_coord,y_coord):
+# add your draw o function here. I recommend using dot(). See notes in readme
+    x_coord, y_coord = center_coords_for_drawing(x_coord, y_coord)
+    teleport(x_coord,y_coord)
+    t.dot(100, "black")
+    t.dot(98, "white")
+    t.update()
+    t.onscreenclick(draw_x)
+    
+    
+# Todo 1 experiment with tracer
+t.onscreenclick(draw_x)
+t.tracer(0) #make things seem instantanious
+t.hideturtle() #make the little triangle turtle disappear
+draw_board_w_coords()
+t.listen()
+
+
+
+t.update()
+
+
+
+t.done()
+
+# Todo 4 Remember that we need to update our board_list to check for winners,
+# how can we do that with the centered x_coord, y_coord? Hint: the board is a list
+# and lists are defined globally and the index should be [0,1,2] We'll do this
+#together
+# before merging our code
+
