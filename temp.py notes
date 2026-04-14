@@ -1,0 +1,118 @@
+# SPDX-FileCopyrightText: 2017 John Edgar Park for Adafruit Industries
+# source: https://learn.adafruit.com/adafruit-circuit-playground-express/playground-temperature
+# SPDX-License-Identifier: MIT
+# I had to add adafruit_thermisor to the libs folder. 
+
+# Circuit Playground Temperature
+# Reads the on-board temperature sensor and prints the value
+
+import time
+import adafruit_thermistor   # This is not a built in function, I had to add it to the libs folder
+import board
+
+
+#######################################################################
+
+# this was added from light_sensor.py
+
+import neopixel
+import analogio
+import simpleio   # Not a circuit python lib
+from digitalio import DigitalInOut, Direction, Pull
+
+
+
+
+####################################################################
+
+# you have to find a way to range temperature in fareheint of 45-90 degrees
+# maybe use inequalities or try the tuples!!!!!!!!!
+
+##################### these are the 6 colors ###################
+
+# make these colors into varable names 
+
+#             pixels[0] = (77, 147, 221) # lagoon blue
+#             pixels[1] = (75, 220, 227) # turquoise
+#             pixels[2] = (161, 237, 222) # water leaf 
+#             pixels[3] = (239, 242, 177) # green yellow
+#             pixels[4] = (255, 213, 18) # vibrant gold
+#             pixels[5] = (245, 59, 59) # red
+#             pixels[6] = (195, 18, 32) # smooth red
+################################################################
+
+# only edit if you it helps read the range, so far this code--
+# helps with printing the temp_value
+
+thermistor = adafruit_thermistor.Thermistor(
+    board.TEMPERATURE, 10000, 10000, 25, 3950)
+
+pixels = neopixel.NeoPixel(board.NEOPIXEL, 10, brightness=.05, auto_write=False)
+pixels.fill((0, 0, 0))
+pixels.show()
+
+# try to make a list with these values 
+lagoon_blue = (77, 147, 221)
+turquoise = (75, 220, 227)
+water_leaf = (161, 237, 222)
+green_yellow = (239, 242, 177)
+vibrant_gold = (255, 213, 18)
+red =(245, 59, 59)
+smooth_red = (195, 18, 32)
+off = (0,0,0)
+
+colors = [lagoon_blue, turquoise, water_leaf, green_yellow, vibrant_gold, red , smooth_red]
+
+
+def pixel_color(temp_f):
+    # FIRST TO TURN OFF THE PIXELS!!!!!!!!!
+    pixels.fill(0)
+    
+    # write if statments to equal items in the list
+    
+    if temp_f > 90:
+        num_color = 6
+        
+    elif temp_f > 82.5:
+        num_color = 5
+        
+    elif temp_f > 75:
+        num_color = 4
+        
+    elif temp_f > 67.5:
+        num_color = 3
+        
+    elif temp_f > 60:
+        num_color = 2
+        
+    elif temp_f > 52.5:
+        num_color = 1
+        
+    elif temp_f > 45:
+        num_color = 0
+        
+    for num in range (num_color +1):
+        pixels[num] = colors[num]
+        
+    return pixels
+
+while True:
+    temp_c = thermistor.temperature
+    temp_f = thermistor.temperature * 9 / 5 + 32
+    print("Temperature is: %f C and %f F" % (temp_c, temp_f))
+    
+    pixel_color(temp_f)
+
+    time.sleep(0.25)
+    pixels.show()
+
+        
+        
+        
+led = DigitalInOut(board.LED)     # D13 works too
+led.direction = Direction.OUTPUT  
+
+        
+
+
+
