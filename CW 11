@@ -1,0 +1,117 @@
+# SPDX-FileCopyrightText: 2017 Kattni Rembor for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
+# source: https://learn.adafruit.com/circuit-playground-express-piano-in-the-key-of-lime/piano-in-the-key-of-lime
+
+# docmentation: https://docs.circuitpython.org/projects/circuitplayground/en/latest/api.html#adafruit-circuitplayground-express
+
+from adafruit_circuitplayground import cp
+import time
+
+# make a dictionary
+# color dictionary 
+color_0 = (15, 0, 0)
+color_1 = (15, 5, 0)
+color_2 = (15, 15, 0)
+color_3 = (0, 15, 0)
+color_4 = (0, 15, 15)
+color_5 = (0, 0, 15)
+color_6 = (5, 0, 15)
+color_7 = (15, 0, 15)
+color_8 = (0, 0, 0)
+
+# make a list
+
+tune_list = [262, 294, 330, 349, 392, 440, 494, 523]
+
+color_list = [color_0, color_1, color_2, color_3, color_4, color_5,
+              color_6, color_7, color_8]
+
+# new_list = [color_0: 262, color_1: 294, color_2: 330, color_3: 349,
+#    color_4: 392, color_5: 440, color_6: 494, color_7: 523]
+#               
+#               
+# key = [new_list[0]: cp.pixels[1], new_list[1]: cp.pixels[2],
+#        new_list[2]: cp.pixels[3], new_list[3]: cp.pixels[4],
+#        new_list[4]: cp.pixels[6], new_list[5]: cp.pixels[8],
+#        new_list[6]: cp.pixels[9], new_list[7]: cp.pixels[8]
+#        ]
+#maybe set color and tune list equal to eachother
+# for num in range (0,9):
+#     tune_list[num] = color_list[num]
+#     num += 1
+# 
+def make_a_name():
+    cp.touch_A4 = key[0]
+    cp.touch_A5 = key[1]
+    cp.touch_A6 = key[2]
+    cp.touch_A7 = key[3]
+    cp.touch_A1 = key[4]
+    cp.touch_A2 = key[5]
+    cp.touch_A3 = key[6]
+    cp.touch_A4 = key[7]
+
+    
+
+
+
+while True:
+    
+    if cp.switch:
+        print("Slide switch is off!")
+        cp.pixels.fill((0, 0, 0))
+        cp.stop_tone()
+        continue
+    
+    #make if elif statements shorter
+    # maybe a function about the touch
+    
+    if cp.touch_A4:
+        print('Touched A4!')
+        cp.pixels[1] = color_list[0]
+        cp.start_tone(tune_list[0])
+        
+    elif cp.touch_A5:
+        print('Touched A5!')
+        cp.pixels[2] = color_list[1]
+        cp.start_tone(tune_list[1])
+        
+    elif cp.touch_A6:
+        print('Touched A6!')
+        cp.pixels[3] = color_list[2]
+        cp.start_tone(tune_list[2])
+        
+    elif cp.touch_A7:
+        print('Touched A7!')
+        cp.pixels[4] = color_list[3]
+        cp.start_tone(tune_list[3])
+        
+    elif cp.touch_A1:
+        print('Touched A1!')
+        cp.pixels[6] = color_list[4]
+        cp.start_tone(tune_list[4])
+        
+    elif cp.touch_A2 and not cp.touch_A3:
+        print('Touched A2!')
+        cp.pixels[8] = color_list[5]
+        cp.start_tone(tune_list[5])
+        
+    elif cp.touch_A3 and not cp.touch_A2:
+        print('Touched A3!')
+        cp.pixels[9] = color_list[6]
+        cp.start_tone(tune_list[6])
+        
+    elif cp.touch_A2 and cp.touch_A3:
+        print('Touched "8"!')
+        cp.pixels[8] = color_list[7]
+        cp.start_tone(tune_list[7])
+        
+    else:
+        cp.pixels.fill((0, 0, 0))
+        cp.stop_tone()
+
+        
+    cp.pixels.show()
+    time.sleep(0.1)
+
